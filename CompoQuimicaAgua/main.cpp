@@ -1,16 +1,42 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include "Agua.h"
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-int main() {
-    // TIP Press <shortcut actionId="RenameElement"/> when your caret is at the <b>lang</b> variable name to see how CLion can help you rename it.
-    auto lang = "C++";
-    std::cout << "Hello and welcome to " << lang << "!\n";
-
-    for (int i = 1; i <= 5; i++) {
-        // TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        std::cout << "i = " << i << std::endl;
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        std::cerr << "Uso: " << argv[0] << " <filename.cafe>" << std::endl;
+        return 1;
     }
 
+    std::string filename = argv[1];
+    if (filename.length() <= 5 || filename.substr(filename.length() - 5) != ".cafe") {
+        std::cerr << "Error: El archivo debe tener la extensión .cafe" << std::endl;
+        return 1;
+    }
+
+    std::ifstream inputFile(filename);
+    if (!inputFile) {
+        std::cerr << "Error al abrir el archivo " << filename << std::endl;
+        return 1;
+    }
+
+    agua aguaDeCafe;
+    inputFile >> aguaDeCafe;
+    inputFile.close();
+
+    aguaDeCafe.calcular();
+
+    std::ofstream outputFile("ingredientes");
+    if (!outputFile) {
+        std::cerr << "Error al crear el archivo de salida 'ingredientes'" << std::endl;
+        return 1;
+    }
+
+    outputFile << aguaDeCafe;
+    outputFile.close();
+
+    std::cout << "Los ingredientes se han calculado y guardado en el archivo 'ingredientes'." << std::endl;
+
     return 0;
-    // TIP See CLion help at <a href="https://www.jetbrains.com/help/clion/">jetbrains.com/help/clion/</a>. Also, you can try interactive lessons for CLion by selecting 'Help | Learn IDE Features' from the main menu.
 }

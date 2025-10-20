@@ -38,7 +38,6 @@ private:
         double ca;
         double mg;
         double na;
-        double s;
     };
 
     // Ingredientes necesarios para añadir al agua
