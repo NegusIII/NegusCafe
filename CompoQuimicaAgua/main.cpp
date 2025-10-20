@@ -1,7 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdexcept>
 #include "Agua.h"
+
+/*EJECUTAR:
+cmake-build-debug/CompoQuimicaAgua /home/ed/Escritorio/cafe/aguas/agua.cafe && cp ingredientes /home/ed/Escritorio/cafe/aguas/
+*/
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -15,28 +20,25 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::ifstream inputFile(filename);
-    if (!inputFile) {
-        std::cerr << "Error al abrir el archivo " << filename << std::endl;
+    try {
+        agua aguaDeCafe(filename);
+        aguaDeCafe.calcular();
+
+        std::ofstream outputFile("ingredientes");
+        if (!outputFile) {
+            std::cerr << "Error al crear el archivo de salida" << std::endl;
+            return 1;
+        }
+
+        outputFile << aguaDeCafe;
+        outputFile.close();
+
+        std::cout << "Ingredientes calculados." << std::endl;
+
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
-
-    agua aguaDeCafe;
-    inputFile >> aguaDeCafe;
-    inputFile.close();
-
-    aguaDeCafe.calcular();
-
-    std::ofstream outputFile("ingredientes");
-    if (!outputFile) {
-        std::cerr << "Error al crear el archivo de salida 'ingredientes'" << std::endl;
-        return 1;
-    }
-
-    outputFile << aguaDeCafe;
-    outputFile.close();
-
-    std::cout << "Los ingredientes se han calculado y guardado en el archivo 'ingredientes'." << std::endl;
 
     return 0;
 }
