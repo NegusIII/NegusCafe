@@ -4,41 +4,37 @@
 #include <stdexcept>
 #include "Agua.h"
 
+using namespace std;
+
 /*EJECUTAR:
 cmake-build-debug/CompoQuimicaAgua /home/ed/Escritorio/cafe/aguas/agua.cafe && cp ingredientes /home/ed/Escritorio/cafe/aguas/
 */
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
-        std::cerr << "Uso: " << argv[0] << " <filename.cafe>" << std::endl;
+        cerr << "Uso: " << argv[0] << " <filename.cafe>" << endl;
         return 1;
     }
 
-    std::string filename = argv[1];
+    string filename = argv[1];
     if (filename.length() <= 5 || filename.substr(filename.length() - 5) != ".cafe") {
-        std::cerr << "Error: El archivo debe tener la extensión .cafe" << std::endl;
+        cerr << "Error: El archivo debe tener la extensión .cafe" << endl;
         return 1;
     }
 
-    try {
-        agua aguaDeCafe(filename);
-        aguaDeCafe.calcular();
+    agua _agua(filename);
+    _agua.calcular();
 
-        std::ofstream outputFile("ingredientes");
-        if (!outputFile) {
-            std::cerr << "Error al crear el archivo de salida" << std::endl;
-            return 1;
-        }
-
-        outputFile << aguaDeCafe;
-        outputFile.close();
-
-        std::cout << "Ingredientes calculados." << std::endl;
-
-    } catch (const std::invalid_argument& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+    ofstream outputFile("ingredientes");
+    if (!outputFile) {
+        cerr << "Error al crear el archivo de salida" << endl;
         return 1;
     }
+
+    outputFile << _agua;
+    outputFile.close();
+
+    cout << "Ingredientes calculados." << endl;
 
     return 0;
 }
