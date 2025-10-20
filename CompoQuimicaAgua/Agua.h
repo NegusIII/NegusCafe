@@ -5,6 +5,10 @@
 #ifndef COMPOQUIMICAAGUA_AGUA_H
 #define COMPOQUIMICAAGUA_AGUA_H
 
+#include <string>
+#include <iostream>
+
+
 class agua {
 
 private:
@@ -66,13 +70,23 @@ public:
      *
      * @param filename nombre del archivo que contiene la información del agua
      */
-    agua(const string &filename);
+    agua(const std::string &filename);
 
 
     // Métodos de la clase agua:
 
 
+    /**
+     *
+     * @brief calcula el producto final
+     *
+     * @return ingredientes necesarios para conseguir la extracción óptima
+     */
+    ingredientes calcular();
 
+    // Sobrecarga de operadores << y >>
+    friend std::istream& operator>>(std::istream& is, agua& a);
+    friend std::ostream& operator<<(std::ostream& os, const agua& a);
 };
 
 #endif //COMPOQUIMICAAGUA_AGUA_H
