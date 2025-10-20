@@ -3,17 +3,17 @@
 1.- Cálculo de Composición Química del agua para la extracción óptima del café:
 archivo de ejemplo para la ejecución del programa:
 
-Input:
-type:AM
-vol:5
-rs:27
-bc:5
-ca:0.84
-mg:0.36
+Input:<br>
+type:AM<br>
+vol:5<br>
+rs:27<br>
+bc:5<br>
+ca:0.84<br>
+mg:0.36<br>
 na:2.04
 
-Output:
-Ingredientes a añadir:
-Bicarbonato de Sodio: 172.5 mg/L
+Output:<br>
+Ingredientes a añadir:<br>
+Bicarbonato de Sodio: 172.5 mg/L<br>
 Sulfato de Magnesio: 742.248 mg/L
 
